@@ -2,58 +2,62 @@ package sut.game01.core;
 
 import static playn.core.PlayN.*;
 
-import react.UnitSlot;
-
 import playn.core.*;
-import tripleplay.game.*;
-import tripleplay.ui.*;
-import tripleplay.ui.layout.*;
+import playn.core.Mouse;
+import tripleplay.game.Screen;
+import tripleplay.game.ScreenStack;
 
-public class HomeScreen extends UIScreen {
-
-  public static final Font TITLE_FONT = graphics().createFont("Helvetica",
-    Font.Style.PLAIN,24);
-
+public class HomeScreen extends Screen {
   private ScreenStack ss;
-  private Root root;
+  private ImageLayer startButton;
+  private ImageLayer creditButton;
+  private ImageLayer homeButton;
+  private ImageLayer titleLayer;
   private final TestScreen testScreen;
-  
-
-  public HomeScreen(ScreenStack ss) {
+  private final CreditsScreen creditsScreen;
+  public HomeScreen(final ScreenStack ss) {
     this.ss = ss;
     this.testScreen = new TestScreen(ss);
-  }
+    this.creditsScreen = new CreditsScreen(ss);
 
+    Image homeImage = assets().getImage("images/home_sc.jpg");
+    this.homeButton = graphics().createImageLayer(homeImage);
+    Image titleImage = assets().getImage("images/title.png");
+    this.titleLayer = graphics().createImageLayer(titleImage);
+    Image startImage = assets().getImage("images/start.png");
+    this.startButton = graphics().createImageLayer(startImage);
+    Image creditImage = assets().getImage("images/credits.png");
+    this.creditButton = graphics().createImageLayer(creditImage);
+    //titleLayer.setTranslation(350,5);
+    creditButton.setTranslation(5,235);
+    startButton.setTranslation(5,35);
+
+    startButton.addListener(new Mouse.LayerAdapter(){
+       @Override 
+       public void onMouseUp(Mouse.ButtonEvent event){
+        ss.push(testScreen); // <-- pop screen
+       }
+    });
+
+    creditButton.addListener(new Mouse.LayerAdapter(){
+       @Override 
+       public void onMouseUp(Mouse.ButtonEvent event){
+        ss.push(creditsScreen); // <-- pop screen
+       }
+    });
+
+  }
   @Override
   public void wasShown(){
     super.wasShown();
-    root = iface.createRoot(AxisLayout.vertical().gap(15),
-      SimpleStyles.newSheet(),this.layer);
-    root.addStyles(Style.BACKGROUND
-      .is(Background.bordered(0xFFCCCCCC,
-      0xFF99CCFF,5).inset(5,10)));
+    this.layer.add(homeButton);
+    //this.layer.add(titleLayer);
+    this.layer.add(startButton);
+    this.layer.add(creditButton);
+    
 
-    root.setSize(width(),height());
+  }
 
-    root.add(new Label("START")
-     .addStyles(Style.FONT.is(HomeScreen.TITLE_FONT)));
-
-    root.add(new Button("START").onClick(new UnitSlot(){
-      public void onEmit(){
-        ss.push(testScreen);
-      }
-    }));
-
-     root.add(new Label("CREDITS")
-     .addStyles(Style.FONT.is(HomeScreen.TITLE_FONT)));
-
-    root.add(new Button("CREDITS").onClick(new UnitSlot(){
-      public void onEmit(){
-        ss.push(testScreen);
-      }
-    }));
-
-  } 
 }
 
 

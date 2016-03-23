@@ -7,20 +7,23 @@ import playn.core.Mouse;
 import tripleplay.game.Screen;
 import tripleplay.game.ScreenStack;
 
-public class TestScreen extends Screen {
+public class CreditsScreen extends Screen {
 
   private ScreenStack ss;
   private ImageLayer bgLayer;
   private ImageLayer backButtom;
+  private ImageLayer wordLayer;
 
-  public TestScreen(final ScreenStack ss) {
+  public CreditsScreen(final ScreenStack ss) {
     this.ss = ss;
 
-    Image bgImage = assets().getImage("images/fireice.png");
+    Image bgImage = assets().getImage("images/credits_sc.png");
     this.bgLayer = graphics().createImageLayer(bgImage);
-    Image backImage = assets().getImage("images/back-button.png");
+    Image wordImage = assets().getImage("images/credits_word.png");
+    this.wordLayer = graphics().createImageLayer(wordImage);
+    Image backImage = assets().getImage("images/back_credits.png");
     this.backButtom = graphics().createImageLayer(backImage);
-    backButtom.setTranslation(480,5);
+    backButtom.setTranslation(270,344);
 
     backButtom.addListener(new Mouse.LayerAdapter(){
        @Override 
@@ -36,7 +39,9 @@ public class TestScreen extends Screen {
   @Override
   public void wasShown(){
     super.wasShown();
+    
     this.layer.add(bgLayer);
+    this.layer.add(wordLayer);
     this.layer.add(backButtom);
 
   }
