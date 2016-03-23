@@ -35,14 +35,24 @@ public class HomeScreen extends UIScreen {
 
     root.setSize(width(),height());
 
-    root.add(new Label("Event Driven Programming")
+    root.add(new Label("START")
      .addStyles(Style.FONT.is(HomeScreen.TITLE_FONT)));
 
-    root.add(new Button("Start").onClick(new UnitSlot(){
+    root.add(new Button("START").onClick(new UnitSlot(){
       public void onEmit(){
         ss.push(testScreen);
       }
     }));
+
+     root.add(new Label("CREDITS")
+     .addStyles(Style.FONT.is(HomeScreen.TITLE_FONT)));
+
+    root.add(new Button("CREDITS").onClick(new UnitSlot(){
+      public void onEmit(){
+        ss.push(testScreen);
+      }
+    }));
+
   } 
 }
 

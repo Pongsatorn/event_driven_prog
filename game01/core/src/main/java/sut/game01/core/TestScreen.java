@@ -16,11 +16,11 @@ public class TestScreen extends Screen {
   public TestScreen(final ScreenStack ss) {
     this.ss = ss;
 
-    Image bgImage = assets().getImage("images/bg.png");
+    Image bgImage = assets().getImage("images/fireice.png");
     this.bgLayer = graphics().createImageLayer(bgImage);
     Image backImage = assets().getImage("images/back-button.png");
     this.backButtom = graphics().createImageLayer(backImage);
-    backButtom.setTranslation(235,350);
+    backButtom.setTranslation(480,5);
 
     backButtom.addListener(new Mouse.LayerAdapter(){
        @Override 
